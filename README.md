@@ -26,6 +26,7 @@ Messages for PHP applications.
         - [Parameter Replacer](#parameter-replacer)
         - [Limit Length](#limit-length)
         - [Translator](#translator)
+        - [Parameter Translator](#parameter-translator)
 - [Credits](#credits)
 ___
 
@@ -786,6 +787,62 @@ $newMessage = $modifier->modify($message);
 
 var_dump($newMessage->message());
 // string(22) "Ein Fehler is passiert"
+
+var_dump($newMessage === $message);
+// bool(false)
+```
+
+### Parameter Translator
+
+Sometimes you might need to translate message parameters:
+
+```php
+use Tobento\Service\Translation;
+use Tobento\Service\Message\Modifier\ParameterTranslator;
+use Tobento\Service\Message\ModifierInterface;
+use Tobento\Service\Message\Message;
+
+$translator = new Translation\Translator(
+    new Translation\Resources(
+        new Translation\Resource('*', 'en', [
+            'title' => 'title',
+        ]),
+        new Translation\Resource('*', 'de', [
+            'title' => 'Titel',
+        ]),
+    ),
+    new Translation\Modifiers(
+        new Translation\Modifier\Pluralization(),        
+        new Translation\Modifier\ParameterReplacer(),
+    ),
+    new Translation\MissingTranslationHandler(),
+    'de',
+);
+
+$modifier = new ParameterTranslator(
+    parameters: [':attribute'],
+    translator: $translator,
+    src: '*',
+);
+
+var_dump($modifier instanceof ModifierInterface);
+// bool(true)
+
+$message = new Message(
+    level: 'error',
+    message: 'The :attribute is invalid.',
+    parameters: [
+        ':attribute' => 'title',
+    ],
+);
+
+$newMessage = $modifier->modify($message);
+
+var_dump($newMessage->parameters()[':attribute']);
+// string(5) "Titel"
+
+var_dump($newMessage->message());
+// string(26) "The :attribute is invalid."
 
 var_dump($newMessage === $message);
 // bool(false)
