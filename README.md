@@ -754,7 +754,7 @@ use Tobento\Service\Message\Message;
 
 $translator = new Translation\Translator(
     new Translation\Resources(
-        new Translation\Resource('*', 'de', [
+        new Translation\Resource('*', 'en', [
             'Some error occured' => 'Some error occured',
         ]),
         new Translation\Resource('*', 'de', [
