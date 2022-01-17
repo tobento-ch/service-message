@@ -121,5 +121,23 @@ class ParameterReplacerTest extends TestCase
             'Hi John',
             $newMessage->message()
         );      
+    }
+    
+    public function testTrim()
+    {
+        $modifier = new ParameterReplacer();
+
+        $message = new Message(
+            level: 'success',
+            message: ':attribute must be blank ',
+            parameters: [':attribute' => ''],
+        );
+        
+        $newMessage = $modifier->modify($message);
+        
+        $this->assertSame(
+            'must be blank',
+            $newMessage->message()
+        );      
     }    
 }
