@@ -53,7 +53,7 @@ class ParameterReplacer implements ModifierInterface
         
         // Do the replacements.
         return $message->withMessage(
-            strtr($message->message(), $replace)
+            trim(strtr($message->message(), $replace))
         );
     }
 }
