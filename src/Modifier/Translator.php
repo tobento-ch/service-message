@@ -42,13 +42,19 @@ class Translator implements ModifierInterface
     public function modify(MessageInterface $message): MessageInterface
     {
         $parameters = $message->parameters();
+        
+        if (isset($parameters['translated'])) {
+            return $message;
+        }
+        
         $parameters['src'] = $this->src;
+        $parameters['translated'] = true;
         
         $translated = $this->translator->trans(
             message: $message->message(),
             parameters: $parameters,
         );
-        
-        return $message->withMessage($translated);
+                
+        return $message->withParameters($parameters)->withMessage($translated);
     }
 }
