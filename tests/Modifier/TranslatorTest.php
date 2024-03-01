@@ -72,5 +72,23 @@ class TranslatorTest extends TestCase
         );
         
         $this->assertFalse($message === $newMessage);
-    }    
+    }
+    
+    public function testIsTranslatedOnce()
+    {
+        $modifier = new Translator(
+            translator: $this->getTranslator(),
+            src: '*',
+        );
+
+        $message = new Message(
+            level: 'error',
+            message: 'Some error occured',
+            parameters: ['translated' => true],
+        );
+        
+        $newMessage = $modifier->modify($message);
+        
+        $this->assertSame('Some error occured', $newMessage->message());
+    }
 }
