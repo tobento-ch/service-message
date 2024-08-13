@@ -13,10 +13,13 @@ declare(strict_types=1);
 
 namespace Tobento\Service\Message;
 
+use Tobento\Service\Support\Arrayable;
+use Stringable;
+
 /**
  * MessageInterface
  */
-interface MessageInterface
+interface MessageInterface extends Arrayable, Stringable
 {
     /**
      * Returns the level.
