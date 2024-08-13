@@ -13,13 +13,10 @@ declare(strict_types=1);
 
 namespace Tobento\Service\Message;
 
-use Tobento\Service\Support\Arrayable;
-use Stringable;
-
 /**
  * Message
  */
-class Message implements MessageInterface, Arrayable, Stringable
+class Message implements MessageInterface
 {
     /**
      * Create a new Message.
