@@ -394,5 +394,31 @@ class MessagesTest extends TestCase
         $this->assertTrue($messages->has());
         $this->assertTrue($messages->has(levels: ['error', 'success']));
         $this->assertFalse($messages->has(levels: ['error', 'info']));
-    }    
+    }
+    
+    public function testToArrayMethod()
+    {
+        $messages = new Messages();
+        $messages->add(
+            level: 'success',
+            message: 'Hello :name, welcome back',
+            context: ['logged_in' => 'John'],
+            key: 'user.name',
+            parameters: [':name' => 'John'],
+        );
+        
+        $this->assertSame(
+            [
+                [
+                    'level' => 'success',
+                    'message' => 'Hello :name, welcome back',
+                    'context' => ['logged_in' => 'John'],
+                    'key' => 'user.name',
+                    'parameters' => [':name' => 'John'],
+                    'logged' => false,
+                ],
+            ],
+            $messages->toArray()
+        );        
+    }
 }
