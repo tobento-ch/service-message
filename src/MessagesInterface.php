@@ -179,5 +179,12 @@ interface MessagesInterface extends IteratorAggregate
      * @param null|array $levels The message levels such as ['info', 'debug']
      * @return bool
      */
-    public function has(null|array $levels = null): bool;    
+    public function has(null|array $levels = null): bool;
+    
+    /**
+     * Object to array
+     *
+     * @return array
+     */
+    public function toArray(): array;
 }
