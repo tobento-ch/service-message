@@ -374,7 +374,7 @@ class Messages implements MessagesInterface, Arrayable
     /**
      * Get the iterator. 
      *
-     * @return Traversable
+     * @return Traversable<int, MessageInterface>
      */
     public function getIterator(): Traversable
     {    

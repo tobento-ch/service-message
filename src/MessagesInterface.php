@@ -17,7 +17,7 @@ use Psr\Log\LoggerInterface;
 use IteratorAggregate;
 
 /**
- * MessagesInterface
+ * @extends IteratorAggregate<int, MessageInterface>
  */
 interface MessagesInterface extends IteratorAggregate
 {
