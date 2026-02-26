@@ -15,14 +15,13 @@ namespace Tobento\Service\Message;
 
 use Psr\Log\LoggerInterface;
 use Tobento\Service\Collection\Collection;
-use Tobento\Service\Support\Arrayable;
 use ArrayIterator;
 use Traversable;
 
 /**
  * Messages
  */
-class Messages implements MessagesInterface, Arrayable
+class Messages implements MessagesInterface
 {
     /**
      * @var MessageFactoryInterface
@@ -389,5 +388,27 @@ class Messages implements MessagesInterface, Arrayable
     public function toArray(): array
     {
         return (new Collection($this->all()))->toArray();
+    }
+    
+    /**
+     * Returns the string representaion of the messages.
+     *
+     * @return string
+     */
+    public function __toString(): string
+    {
+        $lines = [];
+
+        foreach ($this->messages as $message) {
+            $key = $message->key();
+
+            if ($key !== null) {
+                $lines[] = sprintf('[%s] %s (%s)', $message->level(), $message->message(), $key);
+            } else {
+                $lines[] = sprintf('[%s] %s', $message->level(), $message->message());
+            }
+        }
+
+        return implode(PHP_EOL, $lines);
     }
 }
