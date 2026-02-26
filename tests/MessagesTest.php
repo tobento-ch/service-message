@@ -421,4 +421,41 @@ class MessagesTest extends TestCase
             $messages->toArray()
         );        
     }
+    
+    public function testToStringEmpty()
+    {
+        $messages = new Messages();
+        $this->assertSame('', (string)$messages);
+    }
+
+    public function testToStringSingleWithKey()
+    {
+        $messages = new Messages();
+        $messages->add(level: 'info', message: 'Hello', key: 'foo');
+
+        $this->assertSame('[info] Hello (foo)', (string)$messages);
+    }
+
+    public function testToStringSingleWithoutKey()
+    {
+        $messages = new Messages();
+        $messages->add(level: 'warning', message: 'Be careful');
+
+        $this->assertSame('[warning] Be careful', (string)$messages);
+    }
+
+    public function testToStringMultiple()
+    {
+        $messages = new Messages();
+        $messages->add(level: 'success', message: 'Success msg', key: 'foo');
+        $messages->add(level: 'error', message: 'Error msg');
+        $messages->add(level: 'notice', message: 'Notice msg', key: 'bar');
+
+        $expected =
+            "[success] Success msg (foo)" . PHP_EOL .
+            "[error] Error msg" . PHP_EOL .
+            "[notice] Notice msg (bar)";
+
+        $this->assertSame($expected, (string)$messages);
+    }
 }
