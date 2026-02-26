@@ -15,11 +15,12 @@ namespace Tobento\Service\Message;
 
 use Psr\Log\LoggerInterface;
 use IteratorAggregate;
+use Stringable;
 
 /**
  * @extends IteratorAggregate<int, MessageInterface>
  */
-interface MessagesInterface extends IteratorAggregate
+interface MessagesInterface extends IteratorAggregate, Stringable
 {
     /**
      * Returns a new instance with the specified message factory.
