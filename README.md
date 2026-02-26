@@ -546,6 +546,34 @@ var_dump($messages->has(levels: ['error', 'info']));
 // bool(false)
 ```
 
+**__toString**
+
+```php
+use Tobento\Service\Message\Messages;
+
+$messages = new Messages();
+
+$messages->add(
+    level: 'success',
+    message: 'Success message',
+    key: 'foo',
+);
+
+$messages->add(
+    level: 'error',
+    message: 'Error message',
+);
+
+$string = (string)$messages;
+```
+
+Output:
+
+```
+[success] Success message (foo)
+[error] Error message
+```
+
 ### Messages Aware
 
 You might support messages in any class by using the HasMessages trait:
